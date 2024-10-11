@@ -1,12 +1,16 @@
 const { ipcRenderer } = require('electron');
+const { webFrame } = require('electron');
 
 const noteInput = document.getElementById('note-input');
 const notesList = document.getElementById('notes-list');
 const saveBtn = document.getElementById('save-btn');
 const loadBtn = document.getElementById('load-btn');
+const settingsBtn = document.getElementById('settings-button');
 
 let notes = [];
 let editIndex = -1; // Used to track if we're editing a note
+
+webFrame.setZoomFactor(1.5);
 
 // Load notes on startup
 document.addEventListener('DOMContentLoaded', async () => {

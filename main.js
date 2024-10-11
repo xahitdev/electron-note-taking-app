@@ -3,14 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 let mainWindow;
-
+let setttingsWindow;
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
-        height: 600,
-        height: 600,
-        minHeight: 600,
+        width: 1280,
+        height: 960,
+        minHeight: 800,
         minWidth: 600,
+        icon: path.join(__dirname, 'media/favicon.png'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false, // Enable IPC
@@ -20,6 +21,22 @@ app.on('ready', () => {
     mainWindow.loadFile('index.html');
 
 });
+ipcMain.handle(('settings', () => {
+    //settings section 
+    settingsWindow = new BrowserWindow({
+        width: 400,
+        height: 400,
+        minHeight: 400,
+        minWidth: 400,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false, // Enable IPC
+        },
+    });
+
+    mainWindow.loadFile('settings.html');
+
+}));
 
 // Handle reading notes from JSON
 ipcMain.handle('load-notes', () => {
