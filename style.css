@@ -18,6 +18,12 @@
     background-color: #f9f9f9;
 }
 
+.selection {
+    width: 60px;
+    height: 30px;
+    overflow-y: auto;
+}
+
 .save-button {
     margin-top: 10px;
     margin-right: 5px;

@@ -5,7 +5,7 @@ const noteInput = document.getElementById('note-input');
 const notesList = document.getElementById('notes-list');
 const saveBtn = document.getElementById('save-btn');
 const loadBtn = document.getElementById('load-btn');
-const settingsBtn = document.getElementById('settings-button');
+const settingsBtn = document.getElementById('settings-btn');
 
 let notes = [];
 let editIndex = -1; // Used to track if we're editing a note
@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     notes = await ipcRenderer.invoke('load-notes'); // Load notes from file
     displayNotes(); // Display the loaded notes
 });
+
+settingsBtn.addEventListener('click', async () => {
+    ipcRenderer.send('settings-btn');
+});
+
 
 // Save notes
 saveBtn.addEventListener('click', async () => {

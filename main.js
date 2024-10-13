@@ -1,9 +1,10 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
 const path = require('path');
+const { createSecureContext } = require('tls');
 
 let mainWindow;
-let setttingsWindow;
+let settingsWindow;
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -21,8 +22,7 @@ app.on('ready', () => {
     mainWindow.loadFile('index.html');
 
 });
-ipcMain.handle(('settings', () => {
-    //settings section 
+function openSettingsWindow() {
     settingsWindow = new BrowserWindow({
         width: 400,
         height: 400,
@@ -32,11 +32,19 @@ ipcMain.handle(('settings', () => {
             nodeIntegration: true,
             contextIsolation: false, // Enable IPC
         },
+
     });
+    settingsWindow.loadFile('settings.html');
+}
 
-    mainWindow.loadFile('settings.html');
-
-}));
+ipcMain.on('settings-btn', () => {
+    if (!settingsWindow) {
+        openSettingsWindow();
+    }
+    else {
+        settingsWindow.focus();
+    }
+});
 
 // Handle reading notes from JSON
 ipcMain.handle('load-notes', () => {
